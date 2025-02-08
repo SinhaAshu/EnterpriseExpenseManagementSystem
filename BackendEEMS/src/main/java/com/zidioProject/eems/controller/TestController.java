@@ -10,5 +10,10 @@ public class TestController {
 	public String showMessage() {
 		return "Testing controller";
 	}
+	
+	@GetMapping("/retest")
+	public String retestshowMessage() {
+		return "Testing controller";
+	}
 }
 
