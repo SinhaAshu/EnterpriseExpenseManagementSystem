@@ -5,6 +5,7 @@ import com.zidioProject.eems.Entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     
-	public User findByUid(Long uid);
+	User findByEmail(String email);
 	
 }
+
