@@ -1,0 +1,123 @@
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #333, #555); 
+    padding: 10px 20px;
+    height: 90px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Logo Styling */
+.logo {
+    color:white;
+    height: 40px; /* Adjust size */
+    max-width: 50px;
+}
+
+/* Title Styling */
+.title {
+    flex: 1; /* Pushes content to center */
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.2)
+}
+
+/* Admin Button */
+.admin-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    background-color: #ff660f;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.adminlogin-text {
+    color: black;
+}
+
+.admin-btn:hover {
+    background-color: lightgray;
+}
+
+/* styles for adminlogin page */
+.adminlogin-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #333, #555); 
+    padding: 10px 20px;
+    height: 90px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.welcome-text {
+    flex: 1;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    
+}
+
+
+/* ----------------------------- */
+
+
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: row;
+        height: auto;
+        padding: 10px;
+    }
+
+    .logo {
+        height: 30px; /* Smaller logo */
+        max-width: 40px;
+    }
+
+    .title {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .admin-btn {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .logo {
+        margin-bottom: 5px;
+    }
+
+    .title {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .admin-btn {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+}
