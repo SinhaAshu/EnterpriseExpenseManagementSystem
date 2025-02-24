@@ -7,7 +7,7 @@ import axios from 'axios'
 const Registerpage = () => {
 
   const [formData, setformData] = useState({
-    full_name: '',
+    fullName: '',
     email: '',
     password: '',
     role: 'Employee'
@@ -42,7 +42,7 @@ const Registerpage = () => {
         <h2 className="register-title">Register</h2>
         <form className="register-form" onSubmit={handlesubmit}>
           <label>Full Name:</label>
-          <input type="text" placeholder="Enter full name" name='full_name' value={formData.full_name} onChange={handlechange} required />
+          <input type="text" placeholder="Enter full name" name='fullName' value={formData.fullName} onChange={handlechange} required />
 
           <label>Email:</label>
           <input type="email" placeholder="Enter email" name='email' value={formData.email} onChange={handlechange} required />

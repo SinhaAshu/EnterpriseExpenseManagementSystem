@@ -43,8 +43,8 @@ const Loginpage = () => {
 
           <label>Choose Role:</label>
           <select name='role' value={formData.role} onChange={handlechange}>
-            <option value="employee">Employee</option>
-            <option value="manager">Manager</option>
+            <option value="Employee">Employee</option>
+            <option value="Manager">Manager</option>
           </select>
 
           <button type="submit" className="submit-btn">Submit</button>
