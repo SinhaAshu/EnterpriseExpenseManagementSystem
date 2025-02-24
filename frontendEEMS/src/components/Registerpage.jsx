@@ -10,7 +10,7 @@ const Registerpage = () => {
     full_name: '',
     email: '',
     password: '',
-    role: 'Emloyee'
+    role: 'Employee'
   });
 
   const handlechange = (e) => {
@@ -22,7 +22,7 @@ const Registerpage = () => {
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/addEmp', formData);
+      const response = await axios.post('http://localhost:8080/registration', formData);
       if (response.data) {
         alert("Successfully Registered!");
       } else {
@@ -45,7 +45,7 @@ const Registerpage = () => {
           <input type="text" placeholder="Enter full name" name='full_name' value={formData.full_name} onChange={handlechange} required />
 
           <label>Email:</label>
-          <input type="email" placeholder="Enter eamil" name='email' value={formData.email} onChange={handlechange} required />
+          <input type="email" placeholder="Enter email" name='email' value={formData.email} onChange={handlechange} required />
 
           <label>Password:</label>
           <input type="password" placeholder="Enter password" name='password' value={formData.password} onChange={handlechange} required />
