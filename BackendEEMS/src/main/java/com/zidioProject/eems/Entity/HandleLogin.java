@@ -7,14 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class HandleLogin {
 	
-	private String username;
-	private String password;
-	
-	@Enumerated(EnumType.STRING)
-	private Role role;
+//	private String username;
+//	private String password;
+//	
+//	@Enumerated(EnumType.STRING)
+//	private Role role;
 
 }

@@ -32,21 +32,28 @@ public class UserServiceImplementation implements UserService {
 		return userRepository.findByRole(role);
 	}
 
-	@Override
-	public String loginUser(HandleLogin login) {
-      User user = userRepository.findByEmail(login.getUsername());
-      if( user == null ) {
-    	  return "Username doesn't exist!";
-      }
-      else {
-    	  Role role = user.getRole();
-		if(user.getPassword().equals(login.getPassword()) && role.equals(login.getRole()) ) {
-			return "Login successful!";
-		}
-	}
-		return "Login unsuccessful!";
-	}
+//	@Override
+//	public String loginUser(HandleLogin login) {
+//      User user = userRepository.findByEmail(login.getUsername());
+//      if( user == null ) {
+//    	  return "Username doesn't exist!";
+//      }
+//      else {
+//    	  Role role = user.getRole();
+//		if(user.getPassword().equals(login.getPassword()) && role.equals(login.getRole()) ) {
+//			return "Login successful!";
+//		}
+//	}
+//		return "Login unsuccessful!";
+//	}
 
-	
+	@Override
+	public User loginUser(String email, String password) {
+		User user = userRepository.findByEmail(email);
+		if(user != null && user.getPassword().equals(password)) {
+			return user;
+		}
+		return null;
+	}
 
 }
