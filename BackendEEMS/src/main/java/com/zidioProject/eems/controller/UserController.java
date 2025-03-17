@@ -47,12 +47,12 @@ public class UserController {
 
 	@GetMapping("/login")
 	public String showLoginPage() {
-		return "login"; // Return login.html
+		return "login";
 	}
 
 	@GetMapping("/register")
 	public String showRegisterPage() {
-		return "register"; // Return register.html
+		return "register";
 	}
 
 	@PostMapping("/register")

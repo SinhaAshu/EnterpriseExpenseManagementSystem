@@ -11,9 +11,7 @@ public class DashboardController {
 	
 	@GetMapping("/dashboard")
 	public String showDashboard(@SessionAttribute("user") User user) {
-		if (user.getRole().equals("EMPLOYEE")) {
-			return "employee_dashboard";
-		} else if (user.getRole().equals("MANAGER")) {
+		if (user.getRole().equals("MANAGER")) {
 			return "manager_dashboard";
 		} else if (user.getRole().equals("ADMIN")) {
 			return "admin_dashboard";
