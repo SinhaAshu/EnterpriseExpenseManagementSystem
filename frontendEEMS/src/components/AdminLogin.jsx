@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
 import './styles/stylingheader.css'
 import './styles/stylinglogin.css'
+import React, { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const AdminLogin = () => {
- 
+
+  const navigate = useNavigate();
+
     const [formData, setformData] = useState({
         username: '',
         password: '',
@@ -21,12 +24,20 @@ const AdminLogin = () => {
         e.preventDefault();
         try {
           const response = await axios.post('http://localhost:8080/login', formData);
+          if(response.data === 'Login successful!'){
+            navigate('/adminlanding');
+          }else if (response.data === 'Login unsuccessful!') {
+            alert('Login failed');
+        }
+        else {
           alert(response.data);
+        }
         } catch (error) {
           console.error("Error:", error); // Log the actual error in console
           alert(`Registration failed: ${error.message}`); // Show a proper error message
         }
       };
+
 
     return (
         <>
