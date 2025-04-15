@@ -2,19 +2,29 @@ package com.zidioProject.eems.Services;
 
 import java.util.List;
 
-import com.zidioProject.eems.Entity.Expense;
-import com.zidioProject.eems.Entity.User;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.zidioProject.eems.Entity.Category;
+import com.zidioProject.eems.Entity.Expenses;
+import com.zidioProject.eems.Entity.Status;
+
 
 public interface ExpenseService {
 	
-	public Expense addExpense(Expense expense);
+	public String addExpense(Category category, MultipartFile file, String description, float amount);
 	
-	public List<Expense> getEmployeeExpenses(User employee);
+	public String updateExpense(Integer expenseId, String description, float amount, Category category, MultipartFile file);
 	
-	public List<Expense> getPendingExpensesForManager();
+	public String deleteExpense(Integer expenseId);
 	
-	public List<Expense> getPendingExpensesForAdmin();
+	public List<Expenses> findExpensesByEmployee();
 	
-	public Expense updateExpenseStatus(Long id, String status);
+	public List<Expenses> findExpensesForManager();
+	
+	public List<Expenses> findExpensesForAdmin();
+	
+	public String updateStatus(Integer id, Status newStatus);
+	
+	public List<Expenses> getAllExpenses();
 	
 }
