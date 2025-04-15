@@ -1,42 +1,33 @@
 package com.zidioProject.eems.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.zidioProject.eems.Entity.Role;
-import com.zidioProject.eems.Entity.User;
-import com.zidioProject.eems.Services.ExpenseService;
+import com.zidioProject.eems.Entity.Expenses;
+import com.zidioProject.eems.ServicesImplementation.ExpenseServiceImpl;
 
-@Controller
+
+
+@CrossOrigin(originPatterns = "http://localhost:5173/")
+@RestController
+@RequestMapping("/api/manager")
 public class ManagerController {
-
+	
 	@Autowired
-	private ExpenseService expenseService;
-
-	@GetMapping("/dashboard")
-	public String managerDashboard(@SessionAttribute("user") User user, Model model) {
-		if (user.getRole() != Role.MANAGER) {
-			return "redirect:/dashboard";
-		}
-		model.addAttribute("expenses", expenseService.getPendingExpensesForManager());
-		return "manager_dashboard";
+	private ExpenseServiceImpl expenseService;
+	
+	@PreAuthorize("hasRole('Manager')")
+	@GetMapping("/expense/requests")
+	public List<Expenses> viewPendingRequestExpensesForManager(){
+		return expenseService.findExpensesForManager();
 	}
-
-	@PostMapping("/approve")
-	public String approveExpense(@RequestParam Long id) {
-		expenseService.updateExpenseStatus(id, "APPROVED");
-		return "redirect:/manager/dashboard";
-	}
-
-	@PostMapping("/reject")
-	public String rejectExpense(@RequestParam Long id) {
-		expenseService.updateExpenseStatus(id, "REJECTED");
-		return "redirect:/manager/dashboard";
-	}
+	
+	
 
 }

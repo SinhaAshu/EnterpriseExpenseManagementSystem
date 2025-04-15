@@ -1,43 +1,52 @@
 package com.zidioProject.eems.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.zidioProject.eems.Entity.Employee;
+import com.zidioProject.eems.Entity.Expenses;
+import com.zidioProject.eems.Entity.Roles;
+import com.zidioProject.eems.ServicesImplementation.EmployeeServiceImpl;
+import com.zidioProject.eems.ServicesImplementation.ExpenseServiceImpl;
+
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.zidioProject.eems.Entity.Role;
-import com.zidioProject.eems.Entity.User;
-import com.zidioProject.eems.Services.ExpenseService;
 
-@Controller
-@RequestMapping("/admin")
+@RestController
+@CrossOrigin(originPatterns = "http://localhost:5173/")
+@RequestMapping("/api/admin")
 public class AdminController {
-
+	
 	@Autowired
-	private ExpenseService expenseService;
-
-	@GetMapping("/dashboard")
-	public String adminDashboard(@SessionAttribute("user") User user, Model model) {
-		if (user.getRole() != Role.ADMIN) {
-			return "redirect:/dashboard";
-		}
-		model.addAttribute("expenses", expenseService.getPendingExpensesForAdmin());
-		return "admin_dashboard";
+	private ExpenseServiceImpl expenseService;
+	
+	@Autowired
+	private EmployeeServiceImpl employeeService;
+	
+	@PreAuthorize("hasRole('Admin')")
+	@GetMapping("/expense/requests")
+	public List<Expenses> viewPendingRequestsExpensesForAdmin(){
+		return expenseService.findExpensesForAdmin();
 	}
-
-	@PostMapping("/approve")
-	public String approveExpense(@RequestParam Long id) {
-		expenseService.updateExpenseStatus(id, "APPROVED");
-		return "redirect:/admin/dashboard";
+	
+	@PreAuthorize("hasRole('Admin')")
+	@GetMapping("/view-employee")
+	public List<Employee> viewEmployeeByRole(@RequestParam Roles role) {
+		return employeeService.findByRoles(role);
 	}
-
-	@PostMapping("/reject")
-	public String rejectExpense(@RequestParam Long id) {
-		expenseService.updateExpenseStatus(id, "REJECTED");
-		return "redirect:/admin/dashboard";
+	
+	@PreAuthorize("hasRole('Admin')")
+	@DeleteMapping("/delete-employee")
+	public ResponseEntity<String> deleteEmployee(@RequestParam String email) {
+	    String result = employeeService.deleteEmployee(email);
+	    return ResponseEntity.ok(result);
 	}
 }
