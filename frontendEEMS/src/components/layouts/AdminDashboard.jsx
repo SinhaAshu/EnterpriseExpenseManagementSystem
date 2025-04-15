@@ -6,6 +6,7 @@ import ManagerViewExpense from './maincontent/ManagerViewExpense';
 import AllExpensesList from './maincontent/AllExpensesList';
 import ListofManger from './maincontent/ListofManger';
 import ListofEmployee from './maincontent/ListofEmployee';
+import { logoutUser } from '../../utils/auth';
 
 
 const AdminDashboard = () => {
@@ -32,7 +33,7 @@ const[activeSection, setActiveSection] = useState("home");
  };
     
     const handleLogout = () => {
-        localStorage.removeItem('userToken');
+        logoutUser();
         navigate('/adminlogin');
     }
 

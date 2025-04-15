@@ -5,6 +5,7 @@ import ManagerViewExpense from '@/components/layouts/maincontent/ManagerViewExpe
 import UpdateProfile from'@/components/layouts/maincontent/UpdateProfile';
 import Profile from '@/components/layouts/maincontent/Profile';
 import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../utils/auth';
 
 const ManagerDashboard = () => {
 
@@ -26,9 +27,7 @@ const ManagerDashboard = () => {
     };
 
 const handleLogout = () => {
-    // Clear user session or token (example: localStorage)
-    localStorage.removeItem('userToken');
-    // Use useNavigate to redirect to login page
+    logoutUser();
     navigate('/');
 };
 

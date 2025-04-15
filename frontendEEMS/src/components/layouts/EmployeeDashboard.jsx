@@ -7,6 +7,7 @@ import EmployeeAdExpense from './maincontent/EmployeeAdExpense';
 import EmployeeViewExpense from './maincontent/EmployeeViewExpense';
 import EmployeeExpenseStatus from './maincontent/EmployeeExpenseStatus';
 import UpdateProfile from './maincontent/UpdateProfile';  
+import { logoutUser } from '../../utils/auth';
 
 const EmployeeDashboard = () => {
   
@@ -32,7 +33,7 @@ const EmployeeDashboard = () => {
     };
 
     const handleLogout = () => {
-      localStorage.removeItem('userToken');
+      logoutUser();
       navigate('/');
     }
 

@@ -7,7 +7,7 @@ import axios from 'axios'
 const Registerpage = () => {
 
   const [formData, setformData] = useState({
-    fullName: '',
+    full_name: '',
     email: '',
     password: '',
     role: 'Employee'
@@ -22,7 +22,7 @@ const Registerpage = () => {
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/registration', formData);
+      const response = await axios.post('http://localhost:8080/api/register', formData);
       if (response.data) {
         alert("Successfully Registered!");
       } else {
@@ -42,7 +42,7 @@ const Registerpage = () => {
         <h2 className="register-title">Register</h2>
         <form className="register-form" onSubmit={handlesubmit}>
           <label>Full Name:</label>
-          <input type="text" placeholder="Enter full name" name='fullName' value={formData.fullName} onChange={handlechange} required />
+          <input type="text" placeholder="Enter full name" name='full_name' value={formData.full_name} onChange={handlechange} required />
 
           <label>Email:</label>
           <input type="email" placeholder="Enter email" name='email' value={formData.email} onChange={handlechange} required />

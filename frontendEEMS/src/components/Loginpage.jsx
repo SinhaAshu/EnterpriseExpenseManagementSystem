@@ -1,44 +1,53 @@
-import React, { useState } from 'react'
-import Header from './Header'
-import './styles/stylinglogin.css'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import React, { useState } from 'react';
+import Header from './Header';
+import './styles/stylinglogin.css';
+import { Link, redirect, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Loginpage = () => {
-
   const navigate = useNavigate();
 
-  const [formData, setformData] = useState({
-    username: '',
+  const [formData, setFormData] = useState({
+    email: '',
     password: '',
     role: 'Employee'
   });
 
-  const handlechange = (e) => {
-    setformData({
-      ...formData, [e.target.name]: e.target.value
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
     });
   };
 
-  const handlesubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post('http://localhost:8080/api/login', formData);
-      if (response.data === 'Login successful!') {
+      const response = await axios.post('http://localhost:8080/api/auth/login', formData);
+      const data = response.data;
+
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('email', formData.email);
+        localStorage.setItem('role', formData.role);
+
+        alert("Login successful!");
+
+        // Navigate based on role
         if (formData.role === 'Employee') {
-          navigate('/emplanding'); // Navigate to Employee landing page
+           navigate('/emplanding');
         } else {
-          navigate('/managerlanding'); // Navigate to Manager landing page
+           navigate('/managerlanding');
         }
-      } else if (response.data === 'Login unsuccessful!') {
-        alert('Login failed');
-      }
-      else {
-        alert(response.data);
+      } else if (data.error) {
+        alert(data.error); // e.g. Role mismatch or invalid credentials
+      } else {
+        alert("Unexpected response from server.");
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert(`Login failed: ${error.message}`);
+      console.error("Login error:", error);
+      alert("Login failed: " + (error.response?.data?.error || error.message));
     }
   };
 
@@ -47,15 +56,29 @@ const Loginpage = () => {
       <Header />
       <div className="container">
         <h2 className="login-title">Login</h2>
-        <form className="login-form" onSubmit={handlesubmit} >
-          <label>Username:</label>
-          <input type="text" placeholder="Enter your email" name='username' value={formData.username} onChange={handlechange} required />
+        <form className="login-form" onSubmit={handleSubmit}>
+          <label>Email:</label>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
 
           <label>Password:</label>
-          <input type="password" placeholder="Enter password" name='password' value={formData.password} onChange={handlechange} required />
+          <input
+            type="password"
+            placeholder="Enter password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
 
           <label>Choose Role:</label>
-          <select name='role' value={formData.role} onChange={handlechange}>
+          <select name="role" value={formData.role} onChange={handleChange}>
             <option value="Employee">Employee</option>
             <option value="Manager">Manager</option>
           </select>
@@ -64,11 +87,12 @@ const Loginpage = () => {
         </form>
 
         <p className="register-text">If not registered, register yourself</p>
-        <button className="register-btn" >
-          <Link to="/register" className="register-link">Register</Link></button>
+        <button className="register-btn">
+          <Link to="/register" className="register-link">Register</Link>
+        </button>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Loginpage
+export default Loginpage;
