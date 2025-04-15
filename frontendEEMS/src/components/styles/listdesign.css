@@ -1,0 +1,14 @@
+.list-table {
+    width:80%;
+    margin: auto;
+}
+.list-table th {
+    padding:5px;
+  background-color: rgb(165, 220, 220);
+  text-align: center;
+  font-size: 19px;
+}
+.list-table td {
+    text-align: center;
+  padding:5px;
+}

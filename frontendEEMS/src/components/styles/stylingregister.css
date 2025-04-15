@@ -43,7 +43,7 @@
 }
 
 .register-form input:focus,
-.lregister-form select:focus {
+.register-form select:focus {
     border-color: #007bff;
     box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.5);
 }
