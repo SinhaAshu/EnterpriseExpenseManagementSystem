@@ -27,7 +27,7 @@ public class Expenses {
 	@Enumerated(EnumType.STRING)
 	private Category category;
 	
-	private String invoicePath;
+	private String invoice;
 	
 	private String description;
 	

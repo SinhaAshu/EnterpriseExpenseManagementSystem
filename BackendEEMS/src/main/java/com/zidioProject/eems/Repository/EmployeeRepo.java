@@ -16,4 +16,6 @@ public interface EmployeeRepo extends JpaRepository<Employee, Integer>{
 	List<Employee> findByRole(Roles role);
 
 	boolean existsByEmail(String email);
+	
+	List<Employee> findByRoleNot(Roles role);
 }

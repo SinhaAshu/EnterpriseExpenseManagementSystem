@@ -27,4 +27,6 @@ public interface ExpenseService {
 	
 	public List<Expenses> getAllExpenses();
 	
+	public List<Expenses> findApprovedOrRejectedExpenses();
+	
 }
