@@ -25,6 +25,12 @@ const Registerpage = () => {
       const response = await axios.post('http://localhost:8080/api/register', formData);
       if (response.data) {
         alert("Successfully Registered!");
+        setformData({
+          full_name: '',
+          email: '',
+          password: '',
+          role: 'Employee'
+        });
       } else {
         alert("Registration failed. No response from server.");
       }
