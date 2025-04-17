@@ -19,5 +19,7 @@ public interface ExpenseRepository extends JpaRepository<Expenses, Integer> {
 
 	List<Expenses> findByEmployee_Uid(Long uid);
 	
+	List<Expenses> findByApprovedByAndStatusNot(String approvedBy, Status status);
+	
 	
 }

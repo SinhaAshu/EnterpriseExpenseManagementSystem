@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
-	//registering employee(working)
+	//registering employee
 	public Employee addEmployee(Employee emp) {
 		emp.setPassword(passwordEncoder.encode(emp.getPassword()));
 		return employeeRepo.save(emp);
@@ -44,13 +45,17 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return employeeRepo.findAll();
 	}
 	
-	//display profile(working)
+	//display profile
 	public Employee displayProfile() {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
-		return employeeRepo.findByEmail(email);		
+		Employee employee = employeeRepo.findByEmail(email);
+		if (employee == null) {
+	        throw new UsernameNotFoundException("Employee not found for email: " + email);
+	    }
+		return employee;		
 	}
 	
-	//updating employee(working)
+	//updating employee
 	public String updateProfileInfo(Employee emp) {
 	    String email = SecurityContextHolder.getContext().getAuthentication().getName();
 	    Employee existingEmployee = employeeRepo.findByEmail(email);
@@ -64,7 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	    }
 	}
 	
-	//updating email(working)
+	//updating email
 	public String updateEmail(Employee emp) {
 	    String currentEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 	    Employee existingEmployee = employeeRepo.findByEmail(currentEmail);
@@ -83,7 +88,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	    }
 	}
 	
-	//updating password(working)
+	//updating password
 	public String updatePassword(Employee emp) {
 	    String email = SecurityContextHolder.getContext().getAuthentication().getName();
 	    Employee existingEmployee = employeeRepo.findByEmail(email);
@@ -107,13 +112,17 @@ public class EmployeeServiceImpl implements EmployeeService{
 	    return "Employee deleted successfully.";
 	}
 
+	//find employee excluding admin
+	public List<Employee> findEmployee(){
+		return employeeRepo.findByRoleNot(Roles.Admin);
+	}
 	
     //finding employee via roles
 	public List<Employee> findByRoles(Roles role) {
 		return employeeRepo.findByRole(role);
 	}
 
-	//method for login(working)
+	//method for login
 	public Map<String, String> loginVerification(Employee employee) {		
 		Authentication authentication = authManager
 				.authenticate(new UsernamePasswordAuthenticationToken(employee.getEmail(),employee.getPassword()));
