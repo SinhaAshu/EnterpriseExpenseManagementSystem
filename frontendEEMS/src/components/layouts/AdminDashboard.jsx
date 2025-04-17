@@ -2,11 +2,11 @@ import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Profile from '@/components/layouts/maincontent/Profile';
-import ManagerViewExpense from './maincontent/ManagerViewExpense';
 import AllExpensesList from './maincontent/AllExpensesList';
-import ListofManger from './maincontent/ListofManger';
-import ListofEmployee from './maincontent/ListofEmployee';
+import ListofAllEmployee from './maincontent/ListofAllEmployee';
 import { logoutUser } from '../../utils/auth';
+import AdminExpenseRequests from './maincontent/AdminExpenseRequests';
+import ListofProcessedRequests from './maincontent/ListofProcessedRequests';
 
 
 const AdminDashboard = () => {
@@ -17,14 +17,14 @@ const[activeSection, setActiveSection] = useState("home");
 
  const renderContent = () => {
        switch(activeSection){
-        case "manager":
-        return <ListofManger />;
         case "employee":
-        return <ListofEmployee />;
+        return <ListofAllEmployee />;
+        case "processedrequests":
+        return <ListofProcessedRequests />;
         case "allexpenselist":
             return <AllExpensesList />;
         case "requests":
-        return <ManagerViewExpense />;
+        return <AdminExpenseRequests />;
         default:
             return (
                 <Profile />
@@ -42,8 +42,8 @@ const[activeSection, setActiveSection] = useState("home");
      <div className='home-navbar'> 
         <nav className='home-nav-buttons'>
             <button className='home-nav-btn' onClick={()=> setActiveSection("home")}>Home</button>
-            <button className='home-nav-btn' onClick={()=> setActiveSection("manager")}>Mangers</button>
             <button className='home-nav-btn' onClick={()=> setActiveSection("employee")}>Employee</button>
+            <button className='home-nav-btn' onClick={()=> setActiveSection("processedrequests")}>Approved/Rejected</button>
             <button className='home-nav-btn' onClick={()=> setActiveSection("allexpenselist")}>ViewExpenses</button>
             <button className='home-nav-btn' onClick={()=> setActiveSection("requests")}>Requests</button>
         </nav>

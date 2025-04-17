@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { istokenExpired } from '@/utils/auth'; 
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const token = localStorage.getItem('token');
@@ -7,6 +8,10 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
   if (!token) {
     return <Navigate to="/" replace />; // not logged in, redirect to login
+  }
+
+  if(istokenExpired(token)){
+    return <Navigate to="/" replace />; // token expired, redirect to login
   }
 
   if (allowedRoles && !allowedRoles.includes(role)) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from './Header';
 import './styles/stylinglogin.css';
-import { Link, redirect, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Loginpage = () => {
