@@ -49,7 +49,7 @@ const UpdateProfile = () => {
             }
         })
         if(response.data){
-            alert("Updated Successfully!");
+            toast.success("Updated Successfully!");
             setFormData({
                 full_name: ''
             });
@@ -62,6 +62,10 @@ const UpdateProfile = () => {
 
    const handleChangeEmail = async (e) =>{
     e.preventDefault();
+    if (!email.email.trim()) {
+        toast.error("Email is required");
+        return;
+    }
     const confirmEmail = window.confirm("Are you sure you want to change your email?");
     if (!confirmEmail) return;
     try{
@@ -71,7 +75,7 @@ const UpdateProfile = () => {
             }
         })
         if(response.data){
-            alert("Updated Successfully!");
+            toast.success("Updated Successfully!");
             setEmail({
                 email: ''
             });
@@ -85,6 +89,10 @@ const UpdateProfile = () => {
 
    const handleChangePassword = async (e) =>{
     e.preventDefault();
+    if (!password.password.trim()) {
+        toast.error("Password is required");
+        return;
+    }
     const confirmPassword = window.confirm("Are you sure you want to change your password?");
     if (!confirmPassword) return;
     try{
@@ -94,7 +102,7 @@ const UpdateProfile = () => {
             }
         })
         if(response.data){
-            alert("Updated Successfully!");
+            toast.success("Updated Successfully!");
             setPassword({
                 password: ''
             });
@@ -121,12 +129,12 @@ const UpdateProfile = () => {
 
                     <label>Email:</label>
                     <input type="email" placeholder='Enter new email address' name= "email" value={email.email}
-                    onChange={handleemail}></input>
+                    onChange={handleemail} required></input>
                     <button className='submit-btn' onClick={handleChangeEmail}>Change Email</button>
 
                     <label>Password:</label>
                     <input type="password" placeholder='Enter your new password' name= "password" value={password.password}
-                    onChange={handlepassword}></input>
+                    onChange={handlepassword} required></input>
                     <button className='submit-btn' onClick={handleChangePassword}>Change Password</button>
                 </form>
             </div>
