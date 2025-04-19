@@ -25,7 +25,8 @@ const ListofProcessedRequests = () => {
   }, []);
 
   const getInvoiceUrl = (invoicePath) => {
-    const filename = invoicePath.split('\\').pop(); 
+    if (!invoicePath) return null;
+    const filename = invoicePath.split(/[/\\]/).pop(); // handles both / and \
     return `http://localhost:8080/api/dashboard/view-invoice/${encodeURIComponent(filename)}`;
   };
 
@@ -52,7 +53,10 @@ const ListofProcessedRequests = () => {
                 <td>{exp.employee.full_name}</td>
                 <td>{exp.category}</td>
                 <td>
-                <a href={getInvoiceUrl(exp.invoice)} target='_blank' rel='noopener noreferrer'>View</a>
+                {exp.invoice ? (
+                    <a href={getInvoiceUrl(exp.invoice)} target="_blank" rel="noopener noreferrer">
+                      View
+                    </a>) : (<span style={{ color: 'gray' }}>No Invoice</span>)}
                 </td>
                 <td>{exp.status}</td>
             </tr>

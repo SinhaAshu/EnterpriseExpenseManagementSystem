@@ -7,11 +7,13 @@ import EmployeeDashboard from './components/layouts/EmployeeDashboard';
 import ManagerDashboard from './components/layouts/ManagerDashboard';
 import AdminDashboard from './components/layouts/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   return (
     <>
       <Router>
+        <ToastContainer position='top-right' autoClose='2000' />
         <Routes>
           <Route path="/" element={<Loginpage />} />
           <Route path="/register" element={<Registerpage />} />
