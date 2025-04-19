@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zidioProject.eems.Entity.Employee;
 import com.zidioProject.eems.ServicesImplementation.EmployeeServiceImpl;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api")
@@ -21,7 +23,7 @@ public class AuthController {
 
 	// registering an employee
 	@PostMapping("/register")
-	public Employee registerEmp(@RequestBody Employee employee) {
+	public Employee registerEmp(@Valid @RequestBody Employee employee) {
 		return employeeService.addEmployee(employee);
 	}
 

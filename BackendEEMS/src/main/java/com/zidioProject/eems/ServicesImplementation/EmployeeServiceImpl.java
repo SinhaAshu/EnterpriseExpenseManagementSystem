@@ -70,16 +70,15 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 	
 	//updating email
-	public String updateEmail(Employee emp) {
+	public String updateEmail(Employee newEmail) {
 	    String currentEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 	    Employee existingEmployee = employeeRepo.findByEmail(currentEmail);
 
 	    if (existingEmployee != null) {
-	        if (existingEmployee.getEmail().equals(emp.getEmail()) ||
-	            employeeRepo.existsByEmail(emp.getEmail())) {
+	        if ( existingEmployee.getEmail().equals(newEmail.getEmail()) || employeeRepo.existsByEmail(newEmail.getEmail()) ) {
 	            throw new RuntimeException("This email already exists!");
 	        }else {
-	        existingEmployee.setEmail(emp.getEmail());
+	        existingEmployee.setEmail(newEmail.getEmail());
 	        employeeRepo.save(existingEmployee);
 	        return "Email updated successfully. Please login again.";
 	        }
@@ -94,10 +93,15 @@ public class EmployeeServiceImpl implements EmployeeService{
 	    Employee existingEmployee = employeeRepo.findByEmail(email);
 
 	    if (existingEmployee != null) {
+	    	if(!emp.getPassword().isBlank() && !emp.getPassword().equals(null)) {
 	        existingEmployee.setPassword(passwordEncoder.encode(emp.getPassword()));
 	        employeeRepo.save(existingEmployee);
-	        return "Password updated successfully. Please login again.";
-	    } else {
+	        return "Password updated successfully. Please login again.";}
+	    	else {
+	    		return "Enter password correctly!";
+	    	}
+	    } 
+	    else {
 	        throw new RuntimeException("Employee not found.");
 	    }
 	}

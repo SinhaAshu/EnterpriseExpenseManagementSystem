@@ -20,6 +20,8 @@ import com.zidioProject.eems.Entity.Category;
 import com.zidioProject.eems.Entity.Expenses;
 import com.zidioProject.eems.ServicesImplementation.ExpenseServiceImpl;
 
+import jakarta.validation.Valid;
+
 @RequestMapping("/api/employee")
 @RestController
 public class EmpController {
@@ -30,9 +32,9 @@ public class EmpController {
 	//adding new expense
 	@PreAuthorize("hasRole('Employee')")
 	@PostMapping("/addExpense")
-	public ResponseEntity<String> addingExpense(
+	public ResponseEntity<String> addingExpense(@Valid
 			@RequestParam Category category, 
-			@RequestPart("invoice") MultipartFile file, 
+			@RequestParam(value = "invoice", required = false) MultipartFile file, 
 			@RequestParam String description, 
 			@RequestParam float amount) {
 		String message = expenseService.addExpense(category, file, description, amount);
@@ -42,12 +44,12 @@ public class EmpController {
 	//updating existing expense
 	@PreAuthorize("hasRole('Employee')")
 	@PutMapping("/update-expense/{id}")
-	public ResponseEntity<String> updateExpense(
+	public ResponseEntity<String> updateExpense(@Valid
 	        @PathVariable Integer id,
 	        @RequestParam String description,
 	        @RequestParam float amount,
 	        @RequestParam Category category,
-	        @RequestParam MultipartFile file) {
+	        @RequestParam(value = "invoice", required = false) MultipartFile file) {
 	    
 	    String updated = expenseService.updateExpense(id, description, amount, category, file);
 	    return ResponseEntity.ok(updated);

@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,21 +39,27 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 		if (existingEmployee == null) {
 			throw new RuntimeException("Empployee not found!");
-		} else {
+		} 
+		
 			Expenses newExpense = new Expenses();
 			newExpense.setCategory(category);
 
+		if(file != null && !file.isEmpty()) {
 			String fileDesination = "invoices/";
 			File fileDirectory = new File(fileDesination);
 			if (!fileDirectory.exists()) {
 				fileDirectory.mkdirs();
 			}
+			
 			try {
-				Path filePath = Paths.get(fileDesination + file.getOriginalFilename());
+				String uniqueFileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+				Path filePath = Paths.get(fileDesination + uniqueFileName);
 				Files.write(filePath, file.getBytes());
 				newExpense.setInvoice(filePath.toString());
 			} catch (IOException e) {
 				throw new RuntimeException("Error processing file", e);
+			}}else {
+				newExpense.setInvoice(null);
 			}
 
 			newExpense.setDescription(description);
@@ -62,8 +69,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 			newExpense.setEmployee(existingEmployee);
 
 			expenseRepository.save(newExpense);
-			return "Expense added!";
-		}
+			return "Expense added!";		
 	}
 
 	// updating the expense
@@ -104,7 +110,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 			}
 
 			try {
-				Path newFilePath = Paths.get(fileDirectoryPath + file.getOriginalFilename());
+				String uniqueFileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+				Path newFilePath = Paths.get(fileDirectoryPath + uniqueFileName);
 				Files.write(newFilePath, file.getBytes());
 				expense.setInvoice(newFilePath.toString());
 			} catch (IOException e) {
@@ -141,14 +148,14 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 		else if (expense.getStatus() != Status.PENDING) {
 			throw new RuntimeException("Only pending expenses can be deleted.");
-		} else {
+		} 
+		else {
 			String oldFilePath = expense.getInvoice();
+			if(oldFilePath != null) {
 			File oldFile = new File(oldFilePath);
-
 			if (oldFile.exists()) {
 				oldFile.delete();
-			}
-
+			}}
 			expenseRepository.delete(expense);
 			return "Expense deleted successfully!";
 		}
@@ -199,9 +206,11 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 		// ✅ Capture the authenticated approver's email
 		String approverEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		Employee emplo = employeeRepo.findByEmail(approverEmail);
 
 		existingExpense.setStatus(newStatus);
-		existingExpense.setApprovedBy(approverEmail);
+		existingExpense.setApprovedBy(emplo);
 		expenseRepository.save(existingExpense);
 
 		return newStatus.name();
@@ -215,7 +224,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 	//find expense list with approved by
 	public List<Expenses> findApprovedOrRejectedExpenses(){
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
-		List<Expenses> newList = expenseRepository.findByApprovedByAndStatusNot(email, Status.PENDING);
+		Employee emplo = employeeRepo.findByEmail(email);
+		List<Expenses> newList = expenseRepository.findByApprovedByAndStatusNot(emplo, Status.PENDING);
 		return newList;
 	}
 }

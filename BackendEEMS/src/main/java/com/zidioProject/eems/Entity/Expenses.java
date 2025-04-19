@@ -11,6 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,14 +27,16 @@ public class Expenses {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@NotNull(message = "please fill the category!")
 	@Enumerated(EnumType.STRING)
 	private Category category;
 	
 	private String invoice;
 	
+	@NotBlank(message = "please fill the description!")
 	private String description;
 	
-	@Column(nullable = false)
+	@Min(value = 0, message = "Amount must be positive")
 	private float amount;
 	
 	private Date date;
@@ -43,7 +48,8 @@ public class Expenses {
 	@JoinColumn(name = "employee_id")
 	private Employee employee;
 	
-	@Column(name = "approved_by")
-	private String approvedBy;
+	@ManyToOne
+	@JoinColumn(name = "approved_by")
+	private Employee approvedBy;
 
 }
