@@ -24,7 +24,9 @@ import com.zidioProject.eems.Entity.Employee;
 import com.zidioProject.eems.Entity.Expenses;
 import com.zidioProject.eems.Entity.Status;
 import com.zidioProject.eems.ServicesImplementation.EmployeeServiceImpl;
-import com.zidioProject.eems.ServicesImplementation.ExpenseServiceImpl;;
+import com.zidioProject.eems.ServicesImplementation.ExpenseServiceImpl;
+
+import jakarta.validation.Valid;;
 
 @RestController
 @RequestMapping("/api/dashboard")
@@ -47,8 +49,8 @@ public class GeneralController {
 	}
 
 	@PutMapping("/profile/update-email")
-	public ResponseEntity<String> updateEmail(@RequestBody Employee emp) {
-		return ResponseEntity.ok(empService.updateEmail(emp));
+	public ResponseEntity<String> updateEmail(@RequestBody Employee newEmail) {
+		return ResponseEntity.ok(empService.updateEmail(newEmail));
 	}
 
 	@PutMapping("/profile/update-password")
@@ -59,7 +61,6 @@ public class GeneralController {
 	@PreAuthorize("hasRole('Admin') or hasRole('Manager')")
 	@PutMapping("/update-status/{id}")
 	public ResponseEntity<String> updateExpenseStatus(@PathVariable Integer id, @RequestParam Status status) {
-
 		String result = expenseService.updateStatus(id, status);
 		return ResponseEntity.ok(result);
 	}

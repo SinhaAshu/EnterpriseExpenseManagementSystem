@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.zidioProject.eems.Entity.Employee;
 import com.zidioProject.eems.Entity.Expenses;
 import com.zidioProject.eems.Entity.Status;
 
@@ -19,7 +20,7 @@ public interface ExpenseRepository extends JpaRepository<Expenses, Integer> {
 
 	List<Expenses> findByEmployee_Uid(Long uid);
 	
-	List<Expenses> findByApprovedByAndStatusNot(String approvedBy, Status status);
+	List<Expenses> findByApprovedByAndStatusNot(Employee approvedBy, Status status);
 	
 	
 }

@@ -15,6 +15,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,16 +30,19 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;
     
-    @Column(nullable = false)
+	@NotBlank(message = "Name cannot be blank!")
     private String full_name;
     
-    @Column(nullable = false, unique = true)
+    @Email
+    @NotBlank
+    @Column(unique = true)
     private String email;
     
-    @Column(nullable = false)
+    @NotBlank(message = "Please enter password!")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     
+    @NotNull(message = "No role was selected!")
     @Enumerated(EnumType.STRING)
     private Roles role;
     
