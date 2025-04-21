@@ -8,6 +8,7 @@ import ManagerDashboard from './components/layouts/ManagerDashboard';
 import AdminDashboard from './components/layouts/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import { ToastContainer } from 'react-toastify';
+import AnalyticsPage from './components/layouts/maincontent/AnalyticsPage';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/emplanding" element={<ProtectedRoute allowedRoles={['Employee']}><EmployeeDashboard /> </ProtectedRoute> } />
           <Route path="/managerlanding" element={<ProtectedRoute allowedRoles={['Manager']}><ManagerDashboard /></ProtectedRoute> }/>
           <Route path="/adminlanding" element={<ProtectedRoute allowedRoles={['Admin']}><AdminDashboard /></ProtectedRoute> }/>
+          {/* <Route path="/analytics" element={<ProtectedRoute allowedRoles={['Admin']}><AnalyticsPage /></ProtectedRoute> }/> */}
         </Routes>
       </Router>
     </>

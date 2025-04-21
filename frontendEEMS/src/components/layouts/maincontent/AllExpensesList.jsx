@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { FaTrash } from 'react-icons/fa'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const AllExpensesList = () => {
+
+  const navigate = useNavigate();
+
   const [expenses, setExpenses] = useState([]);
 
   const token = localStorage.getItem('token');
@@ -46,9 +50,14 @@ const AllExpensesList = () => {
     fetchExpenses(); // Refresh the list after delete
   };
 
+  // const handleAnaytics = async () =>{
+  //   navigate('/analytics');
+  // }
+
   return (
     <>
     <h2 className='emp-expenselist-heading'>All Expenses</h2>
+            {/* <button onClick={handleAnaytics()}>Analytics</button> */}
               <div className='emp-expenselist'>
                 <table className='expenselist-table'>
                   <thead>

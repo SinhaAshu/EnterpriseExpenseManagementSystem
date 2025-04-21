@@ -129,12 +129,12 @@ const UpdateProfile = () => {
 
                     <label>Email:</label>
                     <input type="email" placeholder='Enter new email address' name= "email" value={email.email}
-                    onChange={handleemail} required></input>
+                    onChange={handleemail} ></input>
                     <button className='submit-btn' onClick={handleChangeEmail}>Change Email</button>
 
                     <label>Password:</label>
                     <input type="password" placeholder='Enter your new password' name= "password" value={password.password}
-                    onChange={handlepassword} required></input>
+                    onChange={handlepassword} ></input>
                     <button className='submit-btn' onClick={handleChangePassword}>Change Password</button>
                 </form>
             </div>
