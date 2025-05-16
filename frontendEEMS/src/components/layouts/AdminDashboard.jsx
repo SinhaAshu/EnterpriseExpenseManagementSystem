@@ -7,6 +7,7 @@ import ListofAllEmployee from './maincontent/ListofAllEmployee';
 import { logoutUser } from '../../utils/auth';
 import AdminExpenseRequests from './maincontent/AdminExpenseRequests';
 import ListofProcessedRequests from './maincontent/ListofProcessedRequests';
+import AnalyticsPage from './maincontent/AnalyticsPage';
 
 
 const AdminDashboard = () => {
@@ -25,6 +26,8 @@ const[activeSection, setActiveSection] = useState("home");
             return <AllExpensesList />;
         case "requests":
         return <AdminExpenseRequests />;
+        case "analytics":
+        return <AnalyticsPage />;
         default:
             return (
                 <Profile />
@@ -46,6 +49,7 @@ const[activeSection, setActiveSection] = useState("home");
             <button className='home-nav-btn' onClick={()=> setActiveSection("processedrequests")}>Approved/Rejected</button>
             <button className='home-nav-btn' onClick={()=> setActiveSection("allexpenselist")}>ViewExpenses</button>
             <button className='home-nav-btn' onClick={()=> setActiveSection("requests")}>Requests</button>
+            <button className='home-nav-btn' onClick={()=> setActiveSection("analytics")}>Analytics</button>
         </nav>
         <button className='logout-btn' onClick={handleLogout}>LogOut</button>
      </div>
