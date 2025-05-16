@@ -12,6 +12,7 @@ A full-stack web application to manage employee expenses with role-based access,
 - ✅ Expense approval/rejection by manager/admin
 - 🔐 Secure login with JWT authentication
 - 🧑 User profile update (email/password/full name)
+- Admin can view yearly/monthly analytics 
 
 ---
 
@@ -43,4 +44,5 @@ A full-stack web application to manage employee expenses with role-based access,
 - **Expense Module**: Add, view, filter expenses
 - **Approval Module**: Manager/Admin approve or reject expenses
 - **Employee Module**: Add, update, delete(only by admin)
+- **Analytics Module**: View analytics, Filter trends, Download Analytics Report on Excel/Pdf format.
 
