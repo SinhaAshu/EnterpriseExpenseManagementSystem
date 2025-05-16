@@ -19,18 +19,19 @@ import com.zidioProject.eems.utils.PDFExporter;
 
 @Service
 public class AnalyticsServiceImpl implements AnalyticsService {
-	
-	@Autowired
-	private ExpenseRepository expensesRepository;
 
-	@Override
-	public List<ExpenseStatsDTO> getMonthlyTrends() {
-		List<Expenses> allExpenses = expensesRepository.findAll();
+    @Autowired
+    private ExpenseRepository expensesRepository;
+
+    @Override
+    public List<ExpenseStatsDTO> getMonthlyTrends(int year) {
+        List<Expenses> allExpenses = expensesRepository.findAllByYear(year);
+
         Map<String, Float> monthlyMap = new TreeMap<>();
         for (Expenses exp : allExpenses) {
             if (exp.getDate() != null) {
                 LocalDate localDate = exp.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                String key = localDate.getMonth().toString() + " " + localDate.getYear();
+                String key = localDate.getMonth().toString(); // "JANUARY", etc.
                 monthlyMap.put(key, monthlyMap.getOrDefault(key, 0f) + exp.getAmount());
             }
         }
@@ -39,9 +40,10 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 .collect(Collectors.toList());
     }
 
-	@Override
-	public List<ExpenseStatsDTO> getYearlyTrends() {
-		List<Expenses> allExpenses = expensesRepository.findAll();
+    @Override
+    public List<ExpenseStatsDTO> getYearlyTrends() {
+        List<Expenses> allExpenses = expensesRepository.findAll();
+
         Map<Integer, Float> yearlyMap = new TreeMap<>();
         for (Expenses exp : allExpenses) {
             if (exp.getDate() != null) {
@@ -55,9 +57,10 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 .collect(Collectors.toList());
     }
 
-	@Override
-	public List<ExpenseStatsDTO> getCategoryBreakdown() {
-		List<Expenses> allExpenses = expensesRepository.findAll();
+    @Override
+    public List<ExpenseStatsDTO> getCategoryBreakdown(int year) {
+        List<Expenses> allExpenses = expensesRepository.findAllByYear(year);
+
         Map<String, Float> categoryMap = new TreeMap<>();
         for (Expenses exp : allExpenses) {
             if (exp.getCategory() != null) {
@@ -70,16 +73,15 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 .collect(Collectors.toList());
     }
 
-	@Override
-	public byte[] exportToExcel() {
-		 List<Expenses> allExpenses = expensesRepository.findAll();
-	        return ExcelExporter.exportExpensesToExcel(allExpenses);
-	    }
-
-	@Override
-	public byte[] exportToPDF() {
-		List<Expenses> allExpenses = expensesRepository.findAll();
-        return PDFExporter.exportExpensesToPDF(allExpenses);
+    @Override
+    public byte[] exportToExcel(int year) {
+        List<Expenses> allExpenses = expensesRepository.findAllByYear(year);
+        return ExcelExporter.exportExpensesToExcel(allExpenses);
     }
 
+    @Override
+    public byte[] exportToPDF(int year) {
+        List<Expenses> allExpenses = expensesRepository.findAllByYear(year);
+        return PDFExporter.exportExpensesToPDF(allExpenses);
+    }
 }
