@@ -204,7 +204,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 			return "Invalid action. Status can only be updated to APPROVED or REJECTED.";
 		}
 
-		// ✅ Capture the authenticated approver's email
 		String approverEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		Employee emplo = employeeRepo.findByEmail(approverEmail);

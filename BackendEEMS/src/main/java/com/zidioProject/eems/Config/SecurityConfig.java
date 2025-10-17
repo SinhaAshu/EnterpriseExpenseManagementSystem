@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.zidioProject.eems.security.JwtFilter;
 
 @Configuration
@@ -56,10 +55,11 @@ public class SecurityConfig {
 	
 	@Bean
 	AuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(userDetailsService);
-		provider.setPasswordEncoder(passwordEncoder());
-		return provider;		
+	    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+	    provider.setUserDetailsService(userDetailsService);
+	    provider.setPasswordEncoder(passwordEncoder());
+	    return provider;
 	}
+
 
 }

@@ -26,7 +26,7 @@ import com.zidioProject.eems.Entity.Status;
 import com.zidioProject.eems.ServicesImplementation.EmployeeServiceImpl;
 import com.zidioProject.eems.ServicesImplementation.ExpenseServiceImpl;
 
-import jakarta.validation.Valid;;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/dashboard")

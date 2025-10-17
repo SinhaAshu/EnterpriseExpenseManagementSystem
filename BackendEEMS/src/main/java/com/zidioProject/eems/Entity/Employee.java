@@ -18,6 +18,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -35,6 +36,9 @@ public class Employee {
     
     @Email
     @NotBlank
+    @Pattern(
+    		regexp = "^[a-z0-9._%+-]+@gmail\\.com$",
+    		message = "Email should be in proper format!")
     @Column(unique = true)
     private String email;
     

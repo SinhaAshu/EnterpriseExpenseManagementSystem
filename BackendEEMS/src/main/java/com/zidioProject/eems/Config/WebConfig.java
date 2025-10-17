@@ -31,7 +31,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/invoices/**")
-                .addResourceLocations("file:invoices/"); // Should be correct path where files are saved
+                .addResourceLocations("file:invoices/"); 	
     }
 	
 }
